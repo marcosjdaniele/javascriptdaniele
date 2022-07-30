@@ -10,7 +10,7 @@ if((reserva == "YOGA") || (reserva == "yoga")) {
     let yoga = prompt("Ingrese horario 18/19/20 hs")
 
     while(yoga != "ESC" ){
-        switch (entrada) {
+        switch (yoga) {
             case "18":
                 alert("Horario reservado: 18HS");
                 break;
@@ -24,7 +24,7 @@ if((reserva == "YOGA") || (reserva == "yoga")) {
                 alert("horario incorrecto")
                 break;
         }
-        entrada = prompt("Ingrese horario 18/19/20 hs");
+        yoga = prompt("Ingrese horario 18/19/20 hs");
     }
 
 } else if((reserva == "SPINNING") || (reserva == "spinning")) {
@@ -33,7 +33,7 @@ if((reserva == "YOGA") || (reserva == "yoga")) {
     let spinning = prompt("Ingrese horario 18/20/22 hs")
 
     while(spinning != "ESC" ){
-        switch (entrada) {
+        switch (spinning) {
             case "18":
                 alert("Horario reservado: 18HS");
                 break;
@@ -47,7 +47,7 @@ if((reserva == "YOGA") || (reserva == "yoga")) {
                 alert("horario incorrecto")
                 break;
         }
-        entrada = prompt("Ingrese horario 18/20/22 hs");
+        spinning = prompt("Ingrese horario 18/20/22 hs");
     }
 
 
@@ -57,7 +57,7 @@ if((reserva == "YOGA") || (reserva == "yoga")) {
     let funcional = prompt("Ingrese horario 17/19/21 hs")
 
     while(funcional != "ESC" ){
-        switch (entrada) {
+        switch (funcional) {
             case "17":
                 alert("Horario reservado: 17HS");
                 break;
@@ -71,7 +71,7 @@ if((reserva == "YOGA") || (reserva == "yoga")) {
                 alert("horario incorrecto")
                 break;
         }
-        entrada = prompt("Ingrese horario 17/19/21 hs");
+        funcional = prompt("Ingrese horario 17/19/21 hs");
     }
 
 } else {

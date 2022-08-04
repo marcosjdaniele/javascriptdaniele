@@ -1,4 +1,4 @@
-let nombre = prompt("Ingrese su nombre: ")
+/*let nombre = prompt("Ingrese su nombre: ")
 
 alert("¡Bienvenido " + nombre + "!")
 
@@ -77,3 +77,59 @@ if((reserva == "YOGA") || (reserva == "yoga")) {
 } else {
     alert("La opción que ingresó no es válida")
 }
+*/
+
+const productos = [{
+    id:'1', 
+    name:'mancuerna',
+    precio: 100,
+    cantidad: 0
+}, {
+    id:'2', 
+    name:'barra',
+    precio: 50,
+    cantidad: 0
+}, {
+    id:'3', 
+    name:'colchoneta',
+    precio: 20,
+    cantidad: 0
+}]
+
+const carrito = []
+let cantidad ;
+let continuar = true ;
+let elemento
+let formControl = 'SI'
+
+alert(
+    "Nombre " + productos[0].name + "! \n" +
+    "Nombre " + productos[1].name + "! \n" + 
+    "Nombre " + productos[2].name + "! \n" 
+    )
+
+do{
+    elemento = prompt("Ingrese que elemento busca: ")
+    const search = productos.find(e => e.name === elemento)
+    
+    if (search) {
+        cantidad = prompt("Ingrese cuantos elementos quiere:")
+    } else{
+        alert("El elemento no existe")
+    }
+    
+    alert("El total va a ser " + search.precio * cantidad )
+
+    search.cantidad = cantidad
+    carrito.push(search)
+    formControl = prompt("desea continuar? SI/NO")
+} 
+while(formControl.toLowerCase() === "si")
+
+let total = 0
+
+carrito.forEach(e => total += e.precio * e.cantidad)
+
+alert(total)
+
+

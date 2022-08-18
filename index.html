@@ -7,8 +7,30 @@
     <title>Simulador </title>
 </head>
 <body>
+    <header>
+        <h1>MD Equipamientos</h1>
+    </header>
+    <body>
+        <div id="seleccionarProducto">
+            <h2>Tenemos en Stock los siguientes elementos</h3>
+            <h4>Seleccione el que desee comprar:</h4>
+            <label for="colchonetas">Colchonetas <br> Precio: $20</label>
+            <input type="radio" name="productos" id="colchonetas" /><br>
+            <label for="mancuernas">Mancuernas <br> Precio: $100</label>
+            <input type="radio" name="productos" id="mancuernas" /><br>
+            <label for="barras">Barras <br> Precio: $50</label>
+            <input type="radio" name="productos" id="barras" /><br>
+            <button id="botonProducto">Seleccionar</button>
+        </div>
+        <div id="seleccionarCantidad">
+            <h2>Ingrese la cantidad de <span id="productoSeleccionado"></span> que te gustaría comprar:</h2>
+            <input id="cantidadElementos" type="number" name="cantidadElementos" value="0" />
+            <input id="BotonAceptar" type="button" value="Aceptar">
+        </div>
+    </body>
     <div>
-        <p>Carrito</p>
+        <h4>Carrito</h4>
+        <p>Su saldo final va a ser de: <span id="total"></span></p>
         <div id="cart">
             <div id="elementos"></div>
             <div id="total"></div>

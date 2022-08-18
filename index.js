@@ -25,17 +25,49 @@ let cantidad;
 let continuar = true;
 let elemento;
 let formControl = "SI";
+
 alert("¡Bienvenido a nuestra pagina de insumos deportivos!");
 
-alert(
-	"Tenemos en Stock: \n" +
-		productos[0].name +
-		"! \n" +
-		productos[1].name +
-		"! \n" +
-		productos[2].name +
-		"! \n"
-);
+const botonSeleccionElemento = document.getElementById('botonProducto')
+    botonSeleccionElemento.addEventListener('click', seleccionarProducto)
+
+function seleccionarProducto() {
+    let inputColchoneta = document.getElementById('colchonetas')
+    let inputMancuerna = document.getElementById('mancuernas')
+    let inputBarra = document.getElementById('barras')
+    let spanProducto = document.getElementById('productoSeleccionado')
+    
+    if (inputColchoneta.checked) {
+		alert("Seleccionaste Colchonetas")
+        spanProducto.innerHTML = 'Colchonetas'
+    } else if (inputMancuerna.checked) {
+		alert("Seleccionaste Mancuernas")
+        spanProducto.innerHTML = 'Mancuernas'
+    } else if (inputBarra.checked) {
+		alert("Seleccionaste Barras")
+        spanProducto.innerHTML = 'Barras'
+    } else {
+        alert('SELECCIONA UN ELEMENTO POR FAVOR')
+    }
+}
+
+let InputCantidadElemento = document.getElementById('cantidadElementos')
+let botonCantidadElemento = document.getElementById('botonAceptar')
+
+elemento = document.getElementById('productoSeleccionado')
+const search = productos.find((e) => e.name === elemento);
+cantidad = InputCantidadElemento;
+console.log( search.precio * cantidad);
+search.cantidad = cantidad;
+carrito.push(search);
+
+let spanTotal = document.getElementById('total')
+let total = 0;
+carrito.forEach((e) => (total += e.precio * e.cantidad));
+spanTotal.innerHTML = total
+
+
+/*
 
 do {
 	elemento = prompt("Ingrese que elemento busca: ");
@@ -59,3 +91,4 @@ let total = 0;
 carrito.forEach((e) => (total += e.precio * e.cantidad));
 
 alert("Su saldo final va a ser de: " + total);
+*/

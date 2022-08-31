@@ -1,78 +1,142 @@
-const productos = [
-  {
-    id: 0,
-    name: "mancuernas",
-    precio: 2500,
-    cantidad: 0,
-  },
-  {
-    id: 1,
-    name: "barras",
-    precio: 7500,
-    cantidad: 0,
-  },
-  {
-    id: 2,
-    name: "colchonetas",
-    precio: 1000,
-    cantidad: 0,
-  },
-];
+class Carrito {
+  comprarProducto(e) {
+    e.preventDefault();
+    if (e.target.classList.contains("agregar-carrito")) {
+      const producto = e.target.parentElement.parentElement;
+      this.leerDatosProducto(producto);
+      swal({
+        text: "Se agregó al carrito!",
+        icon: "success",
+        button: false,
+        timer: 1000,
+      });
+    }
+  }
 
-const carrito = [];
-let cantidad;
-let continuar = true;
-let elemento;
-let formControl = "SI";
+  leerDatosProducto(producto) {
+    const infoProducto = {
+      imagen: producto.querySelector("img").src,
+      titulo: producto.querySelector("h4").textContent,
+      precio: producto.querySelector(".precio span").textContent,
+      id: producto.querySelector("a").getAttribute("data-id"),
+      cantidad: 1,
+    };
+    this.insertarCarrito(infoProducto);
+  }
 
-alert("¡Bienvenido a nuestra pagina de insumos deportivos!");
+  insertarCarrito(producto) {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+            <td>
+              <img src="${producto.imagen}" width=100>
+            </td>
+            <td>${producto.titulo}</td>
+            <td>${producto.precio}</td>
+            <td>
+              <a href="#" class="borrar-producto fas fa-times-circle" data-id="${producto.id}"></a>
+            </td>
+    `;
+    listaProductos.appendChild(row);
+    this.guardarProductosLocalStorage(producto);
+  }
 
-const botonSeleccionElemento = document.getElementById("botonProducto");
-botonSeleccionElemento.addEventListener("click", seleccionarProducto);
-let spanProducto = document.getElementById("productoSeleccionado");
+  eliminarProducto(e) {
+    e.preventDefault();
+    let producto, productoID;
+    if (e.target.classList.contains("borrar-producto")) {
+      e.target.parentElement.parentElement.remove();
+      producto = e.target.parentElement.parentElement;
+      productoID = producto.querySelector("a").getAttribute("data-id");
+    }
+    this.eliminarProductoLocalStorage(productoID);
+  }
+  vaciarCarrito(e) {
+    e.preventDefault();
+    while (listaProductos.firstChild) {
+      listaProductos.removeChild(listaProductos.firstChild);
+    }
+    this.vaciarLocalStorage();
+    return false;
+  }
 
-function seleccionarProducto() {
-  let inputColchoneta = document.getElementById("colchonetas");
-  let inputMancuerna = document.getElementById("mancuernas");
-  let inputBarra = document.getElementById("barras");
+  guardarProductosLocalStorage(producto) {
+    let productos;
+    productos = this.obtenerProductosLocalStorage();
+    productos.push(producto);
+    localStorage.setItem("productos", JSON.stringify(productos));
+  }
 
-  if (inputColchoneta.checked) {
-    alert("Seleccionaste Colchonetas");
-    carrito.push(productos[1]);
-    spanProducto.innerHTML = "Colchonetas";
-    sessionStorage.setItem("producto1", JSON.stringify(productos[1]));
-  } else if (inputMancuerna.checked) {
-    alert("Seleccionaste Mancuernas");
-    carrito.push(productos[0]);
-    spanProducto.innerHTML = "Mancuernas";
-    sessionStorage.setItem("producto0", JSON.stringify(productos[0]));
-  } else if (inputBarra.checked) {
-    alert("Seleccionaste Barras");
-    carrito.push(productos[2]);
-    spanProducto.innerHTML = "Barras";
-    sessionStorage.setItem("producto2", JSON.stringify(productos[2]));
-  } else {
-    alert("SELECCIONA UN ELEMENTO POR FAVOR");
+  obtenerProductosLocalStorage() {
+    let productoLS;
+    if (localStorage.getItem("productos") === null) {
+      productoLS = [];
+    } else {
+      productoLS = JSON.parse(localStorage.getItem("productos"));
+    }
+    return productoLS;
+  }
+
+  eliminarProductoLocalStorage(productoID) {
+    let productosLS;
+    productosLS = this.obtenerProductosLocalStorage();
+    productosLS.forEach(function (productoLS, index) {
+      if (productoLS.id === productoID) {
+        productosLS.splice(index, 1);
+      }
+    });
+    localStorage.setItem("productos", JSON.stringify(productosLS));
+  }
+
+  leerLocalStorage() {
+    let productosLS;
+    productosLS = this.obtenerProductosLocalStorage();
+    productosLS.forEach(function (producto) {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+                <td>
+                    <img src="${producto.imagen}" width=100>
+                </td>
+                <td>${producto.titulo}</td>
+                <td>${producto.precio}</td>
+                <td>
+                    <a href="#" class="borrar-producto fas fa-times-circle" data-id="${producto.id}"></a>
+                </td>
+            `;
+      listaProductos.appendChild(row);
+    });
+  }
+
+  vaciarLocalStorage() {
+    localStorage.clear();
   }
 }
 
-let InputCantidadElemento = document.getElementById("cantidadElementos");
-const botonCantidadElemento = document.getElementById("botonAceptar");
-let total = 0;
-let spanTotal = document.getElementById("total");
+const carro = new Carrito();
+const carrito = document.getElementById("carrito");
+const productos = document.getElementById("lista-productos");
+const listaProductos = document.querySelector("#lista-carrito tbody");
+const vaciarCarritoBtn = document.getElementById("vaciar-carrito");
 
-botonCantidadElemento.addEventListener("click", () => {
-  elemento = document.getElementById("cantidadElementos");
-  cantidad = parseInt(elemento.value);
+cargarEventos();
 
-  carrito.find((e) => {
-    e.name === spanProducto.textContent.toLowerCase()
-      ? (e.cantidad += cantidad)
-      : null;
+function cargarEventos() {
+  productos.addEventListener("click", (e) => {
+    carro.comprarProducto(e);
   });
 
-  carrito.forEach((e) => {
-    total += e.precio * e.cantidad;
-    spanTotal.innerHTML = `${total}`;
+  carrito.addEventListener("click", (e) => {
+    carro.eliminarProducto(e);
   });
-});
+
+  vaciarCarritoBtn.addEventListener("click", (e) => {
+    carro.vaciarCarrito(e);
+    swal({
+      text: "Se vació el carrito!",
+      icon: "error",
+      button: false,
+      timer: 1000,
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", carro.leerLocalStorage());
+}

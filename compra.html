@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/Img/favicon.ico" />
+    <title>Finalizar Compra</title>
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="body__div">
+      <header id="header">
+        <div class="container-fluid">
+          <nav class="navbar navbar-expand-sm navbar-dark pt-0 mt-0">
+            <a class="navbar-brand" href="#"
+              ><img src="./assets/Img/isologo.jpg" alt="logo" width="85px"
+            /></a>
+          </nav>
+        </div>
+      </header>
+      <main
+        class="main container-fluid overflow-auto scroll"
+        class="main_planes"
+      >
+        <main>
+          <div class="container">
+            <div class="row mt-3">
+              <div class="col">
+                <h2
+                  class="d-flex justify-content-center mb-3 text-light text-uppercase"
+                >
+                  Finalizar Compra
+                </h2>
+                <form id="procesar-pago" action="#">
+                  <div class="form-group row">
+                    <label
+                      for="cliente"
+                      class="col-12 col-md-2 col-form-label h2 text-light"
+                      >Cliente :</label
+                    >
+                    <div class="col-12 col-md-10">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="cliente"
+                        placeholder="Ingresar nombre"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label
+                      for="email"
+                      class="col-12 col-md-2 col-form-label h2 text-light"
+                      >Correo :</label
+                    >
+                    <div class="col-12 col-md-10">
+                      <form>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="correo"
+                          placeholder="Ingresa tu correo para verificación"
+                        />
+                        <button
+                          type="submit"
+                          class="mt-2 btn btn-success"
+                          id="btnValidar"
+                        >
+                          validar
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+
+                  <div id="carrito" class="table-responsive">
+                    <table class="table text-bg-light" id="lista-compra">
+                      <thead>
+                        <tr>
+                          <th scope="col">Imagen</th>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Precio unitario</th>
+                          <th scope="col">Cantidad</th>
+                          <th scope="col">Sub Total</th>
+                          <th scope="col">Eliminar</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                      <tr>
+                        <th colspan="4" scope="col" class="text-right">
+                          TOTAL :
+                        </th>
+                        <th scope="col">
+                          <p id="total"></p>
+                        </th>
+                        <!-- <th scope="col"></th> -->
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="row justify-content-between">
+                    <div class="col-md-4 mb-2">
+                      <a href="index.html" class="btn btn-info btn-block"
+                        >Seguir comprando</a
+                      >
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                      <a
+                        href="#"
+                        class="btn btn-success btn-block"
+                        id="procesar-compra"
+                        >Realizar compra</a
+                      >
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </main>
+      </main>
+
+      <footer id="footer" class="container-fluid bg-black mt-3 footer">
+        <div class="container-fluid mh-100">
+          <div class="row footer pt-0">
+            <div class="col-lg-3 col-md-2 col-sm-3 col-2 mx-auto text-white">
+              <a class="footer__a" href="index.html">Inicio</a>
+            </div>
+            <div
+              class="col-lg-6 col-md-8 col-sm-6 col-8 d-flex justify-content-center mx-auto text-white"
+            >
+              <h4 class="footer__h4">OT Equipamientos</h4>
+            </div>
+            <div
+              class="col-lg-3 col-md-2 col-sm-3 col-2 d-flex justify-content-end mx-auto"
+            >
+              <div
+                class="footer__isologo animate__animated animate__pulse animate__infinite infinite"
+              >
+                <a
+                  href="https://www.instagram.com/outdoorteam_/"
+                  target="_blank"
+                  ><img
+                    src="../outdoorteam-daniele/assets/Img/Instagram_icon-icons.com_66804.ico"
+                    alt="logo"
+                    width="100%"
+                /></a>
+                <a href="https://wa.me/" target="_blank"
+                  ><img
+                    src="../outdoorteam-daniele/assets/Img/whatsapp_icon-icons.com_62756.ico"
+                    alt="logo"
+                    width="100%"
+                /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="./js/index.js"></script>
+    <script src="./js/compra.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+  </body>
+</html>

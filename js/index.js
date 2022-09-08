@@ -51,7 +51,9 @@ class Carrito {
       productoID = producto.querySelector("a").getAttribute("data-id");
     }
     this.eliminarProductoLocalStorage(productoID);
+    this.calcularTotal();
   }
+
   vaciarCarrito(e) {
     e.preventDefault();
     while (listaProductos.firstChild) {
@@ -110,37 +112,70 @@ class Carrito {
     });
   }
 
+  leerLocalStorageCompra() {
+    let productoLS;
+    productoLS = this.obtenerProductosLocalStorage();
+    productoLS.forEach(function (producto) {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+                <td>
+                    <img src="${producto.imagen}" width=100>
+                </td>
+                <td>${producto.titulo}</td>
+                <td>${producto.precio}</td>
+                <td>${producto.cantidad}</td>
+                <td id="subtotall">${producto.precio * producto.cantidad}</td>
+                <td>
+                    <a href="#" class="borrar-producto fas fa-times-circle" style="font-size:30px" data-id="${
+                      producto.id
+                    }"></a>
+                </td>
+            `;
+      listaCompra.appendChild(row);
+    });
+  }
+
+  eliminarProductoLocalStorage(cursoID) {
+    let cursosLS;
+    cursosLS = this.obtenerProductosLocalStorage();
+    cursosLS.forEach(function (cursoLS, index) {
+      if (cursoLS.id === cursoID) {
+        cursosLS.splice(index, 1);
+      }
+    });
+    localStorage.setItem("cursos", JSON.stringify(cursosLS));
+  }
+
   vaciarLocalStorage() {
     localStorage.clear();
   }
-}
 
-const carro = new Carrito();
-const carrito = document.getElementById("carrito");
-const productos = document.getElementById("lista-productos");
-const listaProductos = document.querySelector("#lista-carrito tbody");
-const vaciarCarritoBtn = document.getElementById("vaciar-carrito");
+  procesarPedido(e) {
+    e.preventDefault();
+    console.log();
+    if (this.obtenerProductosLocalStorage().length === 0) {
+      swal({
+        title: "Oops..",
+        text: "¡Tu carrito está vacio!",
+        icon: "error",
+        button: false,
+        timer: 1000,
+      });
+    } else {
+      location.href = "compra.html";
+    }
+  }
 
-cargarEventos();
-
-function cargarEventos() {
-  productos.addEventListener("click", (e) => {
-    carro.comprarProducto(e);
-  });
-
-  carrito.addEventListener("click", (e) => {
-    carro.eliminarProducto(e);
-  });
-
-  vaciarCarritoBtn.addEventListener("click", (e) => {
-    carro.vaciarCarrito(e);
-    swal({
-      text: "Se vació el carrito!",
-      icon: "error",
-      button: false,
-      timer: 1000,
-    });
-  });
-
-  document.addEventListener("DOMContentLoaded", carro.leerLocalStorage());
+  calcularTotal() {
+    let productoLS;
+    let total = 0;
+    productoLS = this.obtenerProductosLocalStorage();
+    for (let index = 0; index < productoLS.length; index++) {
+      let element = Number(
+        productoLS[index].precio * productoLS[index].cantidad
+      );
+      total = total + element;
+    }
+    document.getElementById("total").innerHTML = "$ " + total.toFixed(2);
+  }
 }

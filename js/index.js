@@ -1,4 +1,38 @@
 class Carrito {
+  leerDatosProducto(producto) {
+    const infoProducto = {
+      imagen: producto.querySelector("img").src,
+      titulo: producto.querySelector("h4").textContent,
+      precio: producto.querySelector(".precio span").textContent,
+      cantidad: producto.querySelector("input").value,
+      id: producto.querySelector("a").getAttribute("data-id"),
+    };
+    this.insertarCarrito(infoProducto);
+  }
+
+  obtenerProductosLocalStorage() {
+    let productoLS;
+    if (localStorage.getItem("productos") === null) {
+      productoLS = [];
+    } else {
+      productoLS = JSON.parse(localStorage.getItem("productos"));
+    }
+    return productoLS;
+  }
+
+  calcularTotal() {
+    let productoLS;
+    let total = 0;
+    productoLS = this.obtenerProductosLocalStorage();
+    for (let index = 0; index < productoLS.length; index++) {
+      let element = Number(
+        productoLS[index].precio * productoLS[index].cantidad
+      );
+      total = total + element;
+    }
+    document.getElementById("total").innerHTML = "$ " + total.toFixed(2);
+  }
+
   comprarProducto(e) {
     e.preventDefault();
     if (e.target.classList.contains("agregar-carrito")) {
@@ -13,15 +47,8 @@ class Carrito {
     }
   }
 
-  leerDatosProducto(producto) {
-    const infoProducto = {
-      imagen: producto.querySelector("img").src,
-      titulo: producto.querySelector("h4").textContent,
-      precio: producto.querySelector(".precio span").textContent,
-      cantidad: producto.querySelector("input").value,
-      id: producto.querySelector("a").getAttribute("data-id"),
-    };
-    this.insertarCarrito(infoProducto);
+  vaciarLocalStorage() {
+    localStorage.clear();
   }
 
   insertarCarrito(producto) {
@@ -35,11 +62,22 @@ class Carrito {
             <td>${producto.cantidad}</td>
             <td>${total}</td>
             <td>
-              <a href="#" class="borrar-producto fas fa-times-circle" data-id="${producto.id}"></a>
+              <button class="btn btn-check borrar-producto" data-id="${producto.id}">x</button>
             </td>
     `;
     listaProductos.appendChild(row);
     this.guardarProductosLocalStorage(producto);
+  }
+
+  eliminarProductoLocalStorage(productoID) {
+    let productosLS;
+    productosLS = this.obtenerProductosLocalStorage();
+    productosLS.forEach(function (productoLS, index) {
+      if (productoLS.id === productoID) {
+        productosLS.splice(index, 1);
+      }
+    });
+    localStorage.setItem("productos", JSON.stringify(productosLS));
   }
 
   eliminarProducto(e) {
@@ -48,7 +86,7 @@ class Carrito {
     if (e.target.classList.contains("borrar-producto")) {
       e.target.parentElement.parentElement.remove();
       producto = e.target.parentElement.parentElement;
-      productoID = producto.querySelector("a").getAttribute("data-id");
+      productoID = producto.querySelector("button").getAttribute("data-id");
     }
     this.eliminarProductoLocalStorage(productoID);
     this.calcularTotal();
@@ -70,27 +108,6 @@ class Carrito {
     localStorage.setItem("productos", JSON.stringify(productos));
   }
 
-  obtenerProductosLocalStorage() {
-    let productoLS;
-    if (localStorage.getItem("productos") === null) {
-      productoLS = [];
-    } else {
-      productoLS = JSON.parse(localStorage.getItem("productos"));
-    }
-    return productoLS;
-  }
-
-  eliminarProductoLocalStorage(productoID) {
-    let productosLS;
-    productosLS = this.obtenerProductosLocalStorage();
-    productosLS.forEach(function (productoLS, index) {
-      if (productoLS.id === productoID) {
-        productosLS.splice(index, 1);
-      }
-    });
-    localStorage.setItem("productos", JSON.stringify(productosLS));
-  }
-
   leerLocalStorage() {
     let productosLS;
     productosLS = this.obtenerProductosLocalStorage();
@@ -105,8 +122,7 @@ class Carrito {
                 <td>${producto.cantidad}</td>
                 <td>${total}</td>
                 <td>
-                    <a href="#" class="borrar-producto fas fa-times-circle" data-id="${producto.id}"></a>
-                </td>
+                  <button class="borrar-producto fas fa-times-circle" data-id="${producto.id}">x</button>
             `;
       listaProductos.appendChild(row);
     });
@@ -124,11 +140,11 @@ class Carrito {
                 <td>${producto.titulo}</td>
                 <td>${producto.precio}</td>
                 <td>${producto.cantidad}</td>
-                <td id="subtotall">${producto.precio * producto.cantidad}</td>
+                <td id="subtotal">${producto.precio * producto.cantidad}</td>
                 <td>
-                    <a href="#" class="borrar-producto fas fa-times-circle" style="font-size:30px" data-id="${
+                    <button class="borrar-producto fas fa-times-circle" style="font-size:30px" data-id="${
                       producto.id
-                    }"></a>
+                    }">x</button>
                 </td>
             `;
       listaCompra.appendChild(row);
@@ -146,10 +162,6 @@ class Carrito {
     localStorage.setItem("cursos", JSON.stringify(cursosLS));
   }
 
-  vaciarLocalStorage() {
-    localStorage.clear();
-  }
-
   procesarPedido(e) {
     e.preventDefault();
     console.log();
@@ -164,18 +176,5 @@ class Carrito {
     } else {
       location.href = "compra.html";
     }
-  }
-
-  calcularTotal() {
-    let productoLS;
-    let total = 0;
-    productoLS = this.obtenerProductosLocalStorage();
-    for (let index = 0; index < productoLS.length; index++) {
-      let element = Number(
-        productoLS[index].precio * productoLS[index].cantidad
-      );
-      total = total + element;
-    }
-    document.getElementById("total").innerHTML = "$ " + total.toFixed(2);
   }
 }

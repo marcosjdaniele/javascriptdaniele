@@ -1,0 +1,22 @@
+[
+  {
+    "nombre": "mancuernas",
+    "precio": 2500,
+    "id": 1,
+    "descripcion": "De hierro <br> Cubiertas de Goma"
+  },
+
+  {
+    "nombre": "Barras",
+    "precio": 7500,
+    "id": 2,
+    "descripcion": "Barras Olímpicas <br> Incluye topes para Discos"
+  },
+
+  {
+    "nombre": "Pesas Rusas",
+    "precio": 5000,
+    "id": 3,
+    "descripcion": "Agarre seguro <br> Cubiertas de Goma"
+  }
+]

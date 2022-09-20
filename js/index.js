@@ -179,6 +179,107 @@ class Carrito {
   }
 }
 
-fetch("data.json")
-  .then((response) => response.json())
-  .then((json) => console.log(json));
+fetch("/data.json")
+  .then((resp) => resp.json())
+  .then((data) => mostrarData(data));
+
+const mostrarData = (data) => {
+  let mancuerna = "";
+  mancuerna += `<div class="card-header">
+                  <h4 class="my-0 font-weight-bold">${data[0].nombre}</h4>
+                </div>
+                <div class="card-body">
+                  <img src="${data[0].imagen}" class="card-img-top" />
+                  <h1 class="card-title pricing-card-title precio">
+                    $ <span class="">${data[0].precio}</span>
+                  </h1>
+                  <ul class="list-unstyled mt-3 mb-4">
+                    <li>${data[0].descripcion}</li>
+                    <li></li>
+                  </ul>
+                  <input
+                    type="number"
+                    class="form-control"
+                    placeholder="Elija una cantidad"
+                    aria-label="Cantidad Elementos"
+                    aria-describedby="button-addon2"
+                  />
+                  <a
+                    href=""
+                    class="btn d-grid col-12 mx-auto btn-outline-light agregar-carrito"
+                    type="button"
+                    data-id="${data[0].id}"
+                  >
+                    Comprar
+                  </a>
+                </div>`;
+
+  document.getElementById("cardMancuerna").innerHTML = mancuerna;
+  let barra = "";
+  barra += `<div class="card-header">
+                  <h4 class="my-0 font-weight-bold">${data[1].nombre}</h4>
+                </div>
+                <div class="card-body">
+                  <img src="${data[1].imagen}" class="card-img-top" />
+                  <h1 class="card-title pricing-card-title precio">
+                    $ <span class="">${data[1].precio}</span>
+                  </h1>
+                  <ul class="list-unstyled mt-3 mb-4">
+                    <li>${data[1].descripcion}</li>
+                    <li></li>
+                  </ul>
+                  <input
+                    type="number"
+                    class="form-control"
+                    placeholder="Elija una cantidad"
+                    aria-label="Cantidad Elementos"
+                    aria-describedby="button-addon2"
+                  />
+                  <a
+                    href=""
+                    class="btn d-grid col-12 mx-auto btn-outline-light agregar-carrito"
+                    type="button"
+                    data-id="${data[1].id}"
+                  >
+                    Comprar
+                  </a>
+                </div>`;
+
+  document.getElementById("cardBarra").innerHTML = barra;
+  let rusa = "";
+  rusa += `<div class="card-header">
+                  <h4 class="my-0 font-weight-bold">${data[2].nombre}</h4>
+                </div>
+                <div class="card-body">
+                  <img src="${data[2].imagen}" class="card-img-top" />
+                  <h1 class="card-title pricing-card-title precio">
+                    $ <span class="">${data[2].precio}</span>
+                  </h1>
+                  <ul class="list-unstyled mt-3 mb-4">
+                    <li>${data[2].descripcion}</li>
+                    <li></li>
+                  </ul>
+                  <input
+                    type="number"
+                    class="form-control"
+                    placeholder="Elija una cantidad"
+                    aria-label="Cantidad Elementos"
+                    aria-describedby="button-addon2"
+                  />
+                  <a
+                    href=""
+                    class="btn d-grid col-12 mx-auto btn-outline-light agregar-carrito"
+                    type="button"
+                    data-id="${data[2].id}"
+                  >
+                    Comprar
+                  </a>
+                </div>`;
+
+  document.getElementById("cardPesaRusa").innerHTML = rusa;
+};
+var names = ["jerry", "tom", "pluto", "micky", "mini"];
+names.forEach(function1);
+function function1(currentValue, index) {
+  console.log("Index in array is: " + index + " ::  Value is: " + currentValue);
+}

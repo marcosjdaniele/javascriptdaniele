@@ -1,6 +1,7 @@
 [
   {
-    "nombre": "mancuernas",
+    "nombre": "Mancuernas",
+    "imagen": "./assets/Img/mancuerna.jpg",
     "precio": 2500,
     "id": 1,
     "descripcion": "De hierro <br> Cubiertas de Goma"
@@ -8,6 +9,7 @@
 
   {
     "nombre": "Barras",
+    "imagen": "./assets/Img/barra.jpg",
     "precio": 7500,
     "id": 2,
     "descripcion": "Barras Olímpicas <br> Incluye topes para Discos"
@@ -15,6 +17,7 @@
 
   {
     "nombre": "Pesas Rusas",
+    "imagen": "./assets/Img/pesarusa.jpg",
     "precio": 5000,
     "id": 3,
     "descripcion": "Agarre seguro <br> Cubiertas de Goma"

@@ -125,3 +125,18 @@ body .body__div {
 .swal-text {
   font-size: 24px;
 }
+.borrar-producto {
+  text-decoration: solid;
+  font-weight: 700;
+  font-size: 20px;
+  color: #000000;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 7px;
+  padding-right: 7px;
+  background-color: #3a7ab9;
+  border-color: #000000da;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 35px;
+}

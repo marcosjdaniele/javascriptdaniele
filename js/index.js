@@ -30,7 +30,8 @@ class Carrito {
       );
       total = total + element;
     }
-    document.getElementById("total").innerHTML = "$ " + total.toFixed(2);
+    if (document.getElementById("total"))
+      document.getElementById("total").innerHTML = "$ " + total;
   }
 
   comprarProducto(e) {
@@ -142,24 +143,24 @@ class Carrito {
                 <td>${producto.cantidad}</td>
                 <td id="subtotal">${producto.precio * producto.cantidad}</td>
                 <td>
-                    <button class="borrar-producto fas fa-times-circle" style="font-size:30px" data-id="${
+                    <button class="borrar-producto" data-id="${
                       producto.id
-                    }">x</button>
+                    }">X</button>
                 </td>
             `;
-      listaCompra.appendChild(row);
+      if (listaCompra) listaCompra.appendChild(row);
     });
   }
 
-  eliminarProductoLocalStorage(cursoID) {
-    let cursosLS;
-    cursosLS = this.obtenerProductosLocalStorage();
-    cursosLS.forEach(function (cursoLS, index) {
-      if (cursoLS.id === cursoID) {
-        cursosLS.splice(index, 1);
+  eliminarProductoLocalStorage(productoID) {
+    let cursoseLS;
+    cursoseLS = this.obtenerProductosLocalStorage();
+    cursoseLS.forEach(function (cursoLS, index) {
+      if (cursoLS.id === productoID) {
+        cursoseLS.splice(index, 1);
       }
     });
-    localStorage.setItem("cursos", JSON.stringify(cursosLS));
+    localStorage.setItem("productos", JSON.stringify(cursoseLS));
   }
 
   procesarPedido(e) {
@@ -184,17 +185,20 @@ fetch("/data.json")
   .then((data) => mostrarData(data));
 
 const mostrarData = (data) => {
-  let mancuerna = "";
-  mancuerna += `<div class="card-header">
-                  <h4 class="my-0 font-weight-bold">${data[0].nombre}</h4>
+  let cardsContent = "";
+  data.forEach((item, index) => {
+    cardsContent += `
+    <div class="card p-2 m-2 shadow-lg p-2 mb-5 bg-black bg-opacity-75 text-light rounded">
+    <div class="card-header">
+                  <h4 class="my-0 font-weight-bold">${item.nombre}</h4>
                 </div>
                 <div class="card-body">
-                  <img src="${data[0].imagen}" class="card-img-top" />
+                  <img src="${item.imagen}" class="card-img-top" />
                   <h1 class="card-title pricing-card-title precio">
-                    $ <span class="">${data[0].precio}</span>
+                    $ <span class="">${item.precio}</span>
                   </h1>
                   <ul class="list-unstyled mt-3 mb-4">
-                    <li>${data[0].descripcion}</li>
+                    <li>${item.descripcion}</li>
                     <li></li>
                   </ul>
                   <input
@@ -208,73 +212,14 @@ const mostrarData = (data) => {
                     href=""
                     class="btn d-grid col-12 mx-auto btn-outline-light agregar-carrito"
                     type="button"
-                    data-id="${data[0].id}"
+                    data-id="${item.id}"
                   >
                     Comprar
                   </a>
-                </div>`;
-
-  document.getElementById("cardMancuerna").innerHTML = mancuerna;
-  let barra = "";
-  barra += `<div class="card-header">
-                  <h4 class="my-0 font-weight-bold">${data[1].nombre}</h4>
                 </div>
-                <div class="card-body">
-                  <img src="${data[1].imagen}" class="card-img-top" />
-                  <h1 class="card-title pricing-card-title precio">
-                    $ <span class="">${data[1].precio}</span>
-                  </h1>
-                  <ul class="list-unstyled mt-3 mb-4">
-                    <li>${data[1].descripcion}</li>
-                    <li></li>
-                  </ul>
-                  <input
-                    type="number"
-                    class="form-control"
-                    placeholder="Elija una cantidad"
-                    aria-label="Cantidad Elementos"
-                    aria-describedby="button-addon2"
-                  />
-                  <a
-                    href=""
-                    class="btn d-grid col-12 mx-auto btn-outline-light agregar-carrito"
-                    type="button"
-                    data-id="${data[1].id}"
-                  >
-                    Comprar
-                  </a>
                 </div>`;
+  });
 
-  document.getElementById("cardBarra").innerHTML = barra;
-  let rusa = "";
-  rusa += `<div class="card-header">
-                  <h4 class="my-0 font-weight-bold">${data[2].nombre}</h4>
-                </div>
-                <div class="card-body">
-                  <img src="${data[2].imagen}" class="card-img-top" />
-                  <h1 class="card-title pricing-card-title precio">
-                    $ <span class="">${data[2].precio}</span>
-                  </h1>
-                  <ul class="list-unstyled mt-3 mb-4">
-                    <li>${data[2].descripcion}</li>
-                    <li></li>
-                  </ul>
-                  <input
-                    type="number"
-                    class="form-control"
-                    placeholder="Elija una cantidad"
-                    aria-label="Cantidad Elementos"
-                    aria-describedby="button-addon2"
-                  />
-                  <a
-                    href=""
-                    class="btn d-grid col-12 mx-auto btn-outline-light agregar-carrito"
-                    type="button"
-                    data-id="${data[2].id}"
-                  >
-                    Comprar
-                  </a>
-                </div>`;
-
-  document.getElementById("cardPesaRusa").innerHTML = rusa;
+  if (document.getElementById("cardsContent"))
+    document.getElementById("cardsContent").innerHTML = cardsContent;
 };

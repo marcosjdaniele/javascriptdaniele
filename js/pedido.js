@@ -9,14 +9,17 @@ cargarEventos();
 
 function cargarEventos() {
   productos.addEventListener("click", (e) => {
+    e.preventDefault();
     carro.comprarProducto(e);
   });
 
   carrito.addEventListener("click", (e) => {
+    e.preventDefault();
     carro.eliminarProducto(e);
   });
 
   vaciarCarritoBtn.addEventListener("click", (e) => {
+    e.preventDefault();
     carro.vaciarCarrito(e);
     swal({
       text: "¡Se vació el carrito!",
@@ -29,6 +32,7 @@ function cargarEventos() {
   document.addEventListener("DOMContentLoaded", carro.leerLocalStorage());
 
   procesarPedidoBtn.addEventListener("click", (e) => {
+    e.preventDefault();
     carro.procesarPedido(e);
   });
 }

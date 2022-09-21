@@ -1,5 +1,6 @@
 const compra = new Carrito();
 const listaCompra = document.querySelector("#lista-compra tbody");
+const carroCompra = document.getElementById("carrito");
 const procesarCompraBtn = document.getElementById("procesar-compra");
 const cliente = document.getElementById("cliente");
 const email = document.getElementById("correo");
@@ -13,24 +14,44 @@ function cargarEventListeners() {
     compra.leerLocalStorageCompra()
   );
 
-  carrito.addEventListener("click", (e) => {
+  carroCompra.addEventListener("click", (e) => {
+    e.preventDefault();
     compra.eliminarProducto(e);
   });
 
-  carrito.addEventListener("change", (e) => {
+  carroCompra.addEventListener("change", (e) => {
     compra.obtenerEvento(e);
   });
 
   compra.calcularTotal();
 
-  botonValidar.addEventListener("click", (e) => {
-    e.preventDefault();
-    const email = document.getElementById("correo");
-    traerEmail(email.value);
-  });
+  if (procesarCompraBtn)
+    procesarCompraBtn.addEventListener("click", procesarCompra);
 }
 
-let requestOptions = {
-  method: "GET",
-  redirect: "follow",
-};
+function procesarCompra(e) {
+  if (compra.obtenerProductosLocalStorage().length === 0) {
+    swal({
+      title: "Oops..",
+      text: "¡No hay productos, regresa a Comprar!",
+      icon: "error",
+      button: false,
+      timer: 2500,
+    });
+    setTimeout(() => {
+      location.href = "index.html";
+    }, 2500);
+  } else {
+    swal({
+      title: "¡Compra Finalizada!",
+      text: "redireccionando a página principal..",
+      icon: "success",
+      button: false,
+      timer: 2500,
+    });
+    setTimeout(() => {
+      compra.vaciarLocalStorage();
+      location.href = "index.html";
+    }, 2500);
+  }
+}

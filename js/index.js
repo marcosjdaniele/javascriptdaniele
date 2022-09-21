@@ -1,4 +1,5 @@
 class Carrito {
+  //Leer datos producto para insertar en carrito
   leerDatosProducto(producto) {
     const infoProducto = {
       imagen: producto.querySelector("img").src,
@@ -10,6 +11,7 @@ class Carrito {
     this.insertarCarrito(infoProducto);
   }
 
+  //Comprueba que haya productos en el LS
   obtenerProductosLocalStorage() {
     let productoLS;
     if (localStorage.getItem("productos") === null) {
@@ -20,6 +22,7 @@ class Carrito {
     return productoLS;
   }
 
+  //Calcula el total del carrito
   calcularTotal() {
     let productoLS;
     let total = 0;
@@ -34,6 +37,7 @@ class Carrito {
       document.getElementById("total").innerHTML = "$ " + total;
   }
 
+  //Agrega un producto al carrito
   comprarProducto(e) {
     e.preventDefault();
     if (e.target.classList.contains("agregar-carrito")) {
@@ -52,6 +56,7 @@ class Carrito {
     localStorage.clear();
   }
 
+  //Muestra el producto seleccionado en el carrito
   insertarCarrito(producto) {
     const row = document.createElement("tr");
     const total = producto.precio * producto.cantidad;
@@ -70,6 +75,7 @@ class Carrito {
     this.guardarProductosLocalStorage(producto);
   }
 
+  //Elimina un producto del LS
   eliminarProductoLocalStorage(productoID) {
     let productosLS;
     productosLS = this.obtenerProductosLocalStorage();
@@ -81,6 +87,7 @@ class Carrito {
     localStorage.setItem("productos", JSON.stringify(productosLS));
   }
 
+  //Elimina un producto del carrito
   eliminarProducto(e) {
     e.preventDefault();
     let producto, productoID;
@@ -93,6 +100,7 @@ class Carrito {
     this.calcularTotal();
   }
 
+  //Vaciar todos los productos del carrito
   vaciarCarrito(e) {
     e.preventDefault();
     while (listaProductos.firstChild) {
@@ -102,6 +110,7 @@ class Carrito {
     return false;
   }
 
+  //Agrega un producto al LS
   guardarProductosLocalStorage(producto) {
     let productos;
     productos = this.obtenerProductosLocalStorage();
@@ -109,6 +118,7 @@ class Carrito {
     localStorage.setItem("productos", JSON.stringify(productos));
   }
 
+  //Agrega los productos guardados del LS al carrito
   leerLocalStorage() {
     let productosLS;
     productosLS = this.obtenerProductosLocalStorage();
@@ -129,6 +139,7 @@ class Carrito {
     });
   }
 
+  //guarda los elementos del carrito de compra final y los muestra
   leerLocalStorageCompra() {
     let productoLS;
     productoLS = this.obtenerProductosLocalStorage();
@@ -152,6 +163,7 @@ class Carrito {
     });
   }
 
+  //Elimina de a un producto del LS
   eliminarProductoLocalStorage(productoID) {
     let cursoseLS;
     cursoseLS = this.obtenerProductosLocalStorage();

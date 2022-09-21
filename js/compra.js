@@ -36,11 +36,11 @@ function procesarCompra(e) {
       text: "¡No hay productos, regresa a Comprar!",
       icon: "error",
       button: false,
-      timer: 2500,
+      timer: 2000,
     });
     setTimeout(() => {
       location.href = "index.html";
-    }, 2500);
+    }, 2000);
   } else {
     swal({
       title: "¡Compra Finalizada!",
